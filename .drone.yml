@@ -1,0 +1,30 @@
+workspace:
+  base: /go
+  path: src/github.com/isaactl/HelloWorld
+
+pipeline:
+  build:
+    image: library/golang:1.8-alpine
+    environment:
+      - CGO_ENABLED=0
+      - GOOS=linux
+      - GOARCH=amd64
+    commands:
+      - go get
+      - go build
+
+  publish/aws-china:
+    image: plugins/ecr
+    region: cn-northwest-1
+    access_key: ${ecr_access_key}
+    secret_key: ${ecr_secret_key}
+    repo: 233812712700.dkr.ecr.cn-northwest-1.amazonaws.com.cn/devnet/stripepay
+    tags:
+      - "${DRONE_COMMIT:0:7}"
+      - latest
+
+  publish:
+    image: plugins/docker
+    repo: isaactl/helloworld
+    tag: latest
+    secrets: [docker_username, docker_password]

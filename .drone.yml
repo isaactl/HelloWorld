@@ -14,7 +14,7 @@ pipeline:
       - go build
 
   publish/aws-china:
-    image: plugins/ecr
+    image: isaactl/ecr
     region: cn-northwest-1
     repo: 233812712700.dkr.ecr.cn-northwest-1.amazonaws.com.cn/devnet/stripepay
     tags:

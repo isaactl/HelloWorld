@@ -1,12 +1,14 @@
-package main
+package models_test
 
 import (
 	"encoding/json"
 	"testing"
+
+	"github.com/isaactl/HelloWorld/models"
 )
 
 func TestCatalogs_Marshal(t *testing.T) {
-	c := Catalogs{}
+	c := models.Catalogs{}
 	c.ID = "id_test"
 	c.Name = "name_test"
 	c.Description = "des_test"
@@ -16,6 +18,5 @@ func TestCatalogs_Marshal(t *testing.T) {
 		t.Fatalf("marshal catalogs failed: %v", err)
 	}
 
-	t.Logf("%+v", c.data)
 	t.Logf("%q", b)
 }

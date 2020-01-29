@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: a-deployment
+  labels:
+    app: a
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: a
+    spec:
+      containers:
+      - name: a-container
+        imagePullPolicy: Always
+        image: "isaactl/helloworld"
+        ports:
+        - containerPort: 80
+        env:
+        - name: "TEST_ENV"
+          value: "What"
+        resources:
+          requests:
+            memory: "64Mi"    # 64MiB
+            cpu: "250m"       # 0.25cpu
+          limits:
+            memory: "128Mi"   # 128MiB
+            cpu: "1000m"      # 1cpu
+  selector:
+    matchLabels:
+      app: a

@@ -1,4 +1,4 @@
-package main
+package models
 
 import (
 	"encoding/json"
@@ -12,10 +12,10 @@ type (
 
 		// shared common fields of catalogs
 		// used for data quick reference
-		CommonFields
+		commonFields
 	}
 
-	CommonFields struct {
+	commonFields struct {
 		ID          string `json:"id"`
 		Name        string `json:"name"`
 		Description string `json:"description"`
@@ -38,7 +38,7 @@ func (c *Catalogs) UnmarshalJSON(input []byte) error {
 		return err
 	}
 
-	if err := json.Unmarshal(input, c.CommonFields); err != nil {
+	if err := json.Unmarshal(input, c.commonFields); err != nil {
 		return err
 	}
 
@@ -52,7 +52,7 @@ func (c *Catalogs) resetData() {
 	}
 
 	// iterate over catalog common fields and assign value to data
-	commonFieldsValues := reflect.ValueOf(c.CommonFields)
+	commonFieldsValues := reflect.ValueOf(c.commonFields)
 	commonFieldsTypes := commonFieldsValues.Type()
 	for i := 0; i < commonFieldsValues.NumField(); i++ {
 		tag := commonFieldsTypes.Field(i).Tag.Get("json")

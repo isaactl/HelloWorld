@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: a-deployment
+  name: helloworld
   labels:
-    app: a
+    app: helloworld
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: a
+        app: helloworld
     spec:
       containers:
-      - name: a-container
+      - name: helloworld
         imagePullPolicy: Always
-        image: "isaactl/helloworld"
+        image: "isaactl/helloworld:v1"
         ports:
         - containerPort: 80
         env:
@@ -29,4 +29,19 @@ spec:
             cpu: "1000m"      # 1cpu
   selector:
     matchLabels:
-      app: a
+      app: helloworld
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: helloworld
+  namespace: default
+spec:
+  ports:
+    - name: http
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    app: helloworld
+  type: ClusterIP
